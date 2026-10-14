@@ -9,7 +9,7 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.svg"],
       manifest: {
-        name: "Cycle — Period tracker",
+        name: "Cycle Tracker",
         short_name: "Cycle",
         description: "A private, simple period cycle tracker.",
         theme_color: "#f6f3ef",
