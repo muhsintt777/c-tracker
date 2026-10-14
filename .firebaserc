@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "dev": "c-tracker-b4806",
+    "prod": "c-tracker-app-prod"
+  }
+}
