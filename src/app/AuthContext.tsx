@@ -1,9 +1,6 @@
 import {
-  GoogleAuthProvider,
-  getRedirectResult,
   onAuthStateChanged,
-  signInWithPopup,
-  signInWithRedirect,
+  signInWithEmailAndPassword,
   signOut as firebaseSignOut,
   type User
 } from "firebase/auth";
@@ -15,7 +12,7 @@ interface AuthContextValue {
   user: User | null;
   loading: boolean;
   error: string | null;
-  signIn: () => Promise<void>;
+  signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   clearError: () => void;
 }
@@ -25,10 +22,16 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 function authErrorMessage(error: unknown): string {
   if (error instanceof Error) {
     const code = "code" in error ? String(error.code) : "";
-    if (code === "auth/popup-closed-by-user") return "";
-    if (code === "auth/unauthorized-domain") {
-      return "This domain is not authorized for Google sign-in. Add it in Firebase Authentication settings.";
+    if (
+      code === "auth/invalid-credential" ||
+      code === "auth/wrong-password" ||
+      code === "auth/user-not-found" ||
+      code === "auth/invalid-email"
+    ) {
+      return "Incorrect email or password.";
     }
+    if (code === "auth/too-many-requests") return "Too many attempts. Please try again later.";
+    if (code === "auth/operation-not-allowed") return "Email/password sign-in is not enabled in Firebase Authentication.";
     if (code === "auth/network-request-failed") return "Network error. Check your connection and try again.";
     return error.message;
   }
@@ -49,13 +52,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     let active = true;
-    void getRedirectResult(authInstance).catch((reason: unknown) => {
-      if (active) {
-        const message = authErrorMessage(reason);
-        if (message) setError(message);
-      }
-    });
-
     const unsubscribe = onAuthStateChanged(authInstance, async (nextUser) => {
       if (!active) return;
       setUser(nextUser);
@@ -88,7 +84,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  async function signIn() {
+  async function signIn(email: string, password: string) {
     if (!auth || !firebaseReady) {
       setError("Add your Firebase web configuration to .env.local to enable sign-in.");
       return;
@@ -96,23 +92,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setError(null);
     setLoading(true);
     try {
-      const provider = new GoogleAuthProvider();
-      const isMobile = /iPad|iPhone|iPod|Android/i.test(navigator.userAgent);
-      if (isMobile) await signInWithRedirect(auth, provider);
-      else {
-        try {
-          await signInWithPopup(auth, provider);
-        } catch (reason) {
-          const code = reason instanceof Error && "code" in reason ? String(reason.code) : "";
-          if (code !== "auth/popup-blocked" && code !== "auth/operation-not-supported-in-this-environment") {
-            throw reason;
-          }
-          await signInWithRedirect(auth, provider);
-        }
-      }
+      await signInWithEmailAndPassword(auth, email.trim(), password);
     } catch (reason) {
-      const message = authErrorMessage(reason);
-      if (message) setError(message);
+      setError(authErrorMessage(reason));
       setLoading(false);
     }
   }

@@ -9,7 +9,7 @@ Requirements: Node.js 20+, npm, and a Firebase project.
 1. Install dependencies with `npm install`.
 2. Create a Firebase web app and copy `.env.example` to `.env.local`.
 3. Fill in `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, and `VITE_FIREBASE_APP_ID`.
-4. In Firebase Console, enable Google as an Authentication provider and add your local and production hostnames to the authorized domains.
+4. In Firebase Console, enable the Email/Password sign-in provider, add your user under Authentication > Users, and add your local and production hostnames to the authorized domains.
 5. Start the development server with `npm run dev`.
 
 If Firebase is not configured, the app displays setup guidance rather than presenting a fake signed-in or offline account.
@@ -18,7 +18,7 @@ If Firebase is not configured, the app displays setup guidance rather than prese
 
 - `src/domain/cycle/` contains pure cycle and calendar-date calculations. Period dates are `YYYY-MM-DD` strings, and calculations use local calendar dates rather than UTC timestamps.
 - `src/services/periodRepository.ts` owns the user's Firestore period collection operations.
-- `src/app/AuthContext.tsx` restores Google Authentication state, creates the minimal user document, and handles desktop popup and mobile redirect sign-in.
+- `src/app/AuthContext.tsx` restores Authentication state, creates the minimal user document, and handles email/password sign-in.
 - `src/features/` contains the login and tracker screens.
 - `firestore.rules` restricts access to each signed-in user's own records and validates fields, date values, and timestamp invariants.
 - `vite-plugin-pwa` generates the application manifest and service worker. Only the application shell/static assets are precached; Firestore responses are not cached.
@@ -37,7 +37,7 @@ npx firebase emulators:start --only firestore --project demo-c-tracker
 
 Production hosting uses Firebase Hosting and publishes the Vite build from `dist/`. The hosting configuration serves the app as a single-page application, applies security headers, and gives fingerprinted build assets long-lived caching while keeping the entry point and service worker revalidatable.
 
-1. Create or select the production Firebase project. In Firebase Console, enable Google Authentication, create the Cloud Firestore database, and add the production Hosting domain to Authentication's authorized domains.
+1. Create or select the production Firebase project. In Firebase Console, enable Email/Password Authentication, create the Cloud Firestore database, and add the production Hosting domain to Authentication's authorized domains.
 2. Sign in to Firebase CLI and select the production project:
 
    ```sh
