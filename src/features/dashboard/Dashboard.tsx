@@ -8,7 +8,7 @@ import {
   X
 } from "lucide-react";
 import { format, parseISO } from "date-fns";
-import { useCallback, useEffect, useMemo, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { useAuth } from "../../app/AuthContext";
 import { analyzeCycle, isCalendarDate, periodDuration } from "../../domain/cycle/calculations";
 import type { Period } from "../../domain/cycle/types";
@@ -33,7 +33,21 @@ export function Dashboard() {
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [profileOpen, setProfileOpen] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
   const userId = user?.uid;
+
+  useEffect(() => {
+    if (!profileOpen) return;
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (event.target instanceof Node && !profileRef.current?.contains(event.target)) {
+        setProfileOpen(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [profileOpen]);
 
   useEffect(() => {
     if (!userId) return;
@@ -175,7 +189,7 @@ export function Dashboard() {
             <h1>Cycle</h1>
             <p>Your cycle overview</p>
           </div>
-          <div className="profile-wrap">
+          <div className="profile-wrap" ref={profileRef}>
             <button className="icon-button profile-trigger" type="button" aria-label="Open profile menu" aria-expanded={profileOpen} onClick={() => setProfileOpen((open) => !open)}>
               <CircleUserRound size={20} />
             </button>
