@@ -60,7 +60,7 @@ button:focus-visible, input:focus-visible { outline: 3px solid #b39bd3; outline-
 .countdown-card { display: flex; min-height: 275px; flex-direction: column; align-items: center; padding: 16px 14px 12px; border-radius: 15px; background: var(--surface); text-align: center; }
 .section-overline { margin: 0 0 16px; color: #766c84; font-size: 10px; font-weight: 500; letter-spacing: .015em; }
 .countdown-ring { position: relative; display: grid; width: 148px; height: 148px; flex: 0 0 auto; place-items: center; color: var(--muted); }
-.countdown-ring svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; transform: rotate(-90deg); }
+.countdown-ring > svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; transform: rotate(-90deg); }
 .countdown-ring circle { fill: none; stroke-width: 9; }
 .ring-track { stroke: #e9e3ee; }
 .ring-value { stroke: #9275b5; stroke-dasharray: 433.54; stroke-dashoffset: calc(433.54 * (1 - var(--ring-progress))); stroke-linecap: round; transition: stroke-dashoffset .2s ease; }
