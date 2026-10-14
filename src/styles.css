@@ -151,6 +151,24 @@ button:focus-visible, input:focus-visible { outline: 3px solid #b39bd3; outline-
   .countdown-card { min-height: 275px; }
 }
 
+@media (min-width: 600px) and (max-width: 1023px) and (orientation: portrait) {
+  .page-shell { min-height: 100dvh; padding: 24px; }
+  .tracker-app { width: min(100%, 680px); min-height: min(960px, calc(100dvh - 48px)); padding: 24px 26px 68px; }
+  .countdown-card { min-height: 320px; padding-top: 20px; }
+  .countdown-ring { width: 164px; height: 164px; }
+  .history-row { min-height: 76px; }
+}
+
+@media (min-width: 700px) and (max-width: 1199px) and (orientation: landscape) {
+  .page-shell { min-height: 100dvh; padding: 20px; }
+  .tracker-app { display: grid; width: min(100%, 1000px); min-height: calc(100dvh - 40px); grid-template-columns: minmax(260px, .8fr) minmax(340px, 1.2fr); align-content: start; gap: 18px 22px; padding: 24px 26px 68px; }
+  .top-bar, .inline-alert, .data-warning { grid-column: 1 / -1; }
+  .top-bar { margin-bottom: 0; }
+  .countdown-card { grid-column: 1; min-height: 340px; }
+  .history-section { grid-column: 2; min-width: 0; margin-top: 0; }
+  .history-row { min-height: 76px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
 }
