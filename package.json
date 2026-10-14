@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "deploy:prod": "npm run build && firebase deploy --only hosting,firestore:rules,firestore:indexes --project prod"
+    "deploy:prod": "npm run build && firebase deploy --only hosting,firestore:rules,firestore:indexes --project c-tracker-app-prod"
   },
   "dependencies": {
     "date-fns": "^4.1.0",
