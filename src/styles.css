@@ -55,6 +55,8 @@ button:focus-visible, input:focus-visible { outline: 3px solid #b39bd3; outline-
 .profile-trigger:hover, .close-button:hover { background: var(--lavender); }
 .profile-menu { position: absolute; top: 44px; right: 0; z-index: 4; display: grid; width: 220px; gap: 9px; padding: 13px; border: 1px solid var(--border); border-radius: 14px; background: white; box-shadow: 0 8px 24px #31253b1a; }
 .profile-email { overflow: hidden; color: var(--muted); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.profile-version { display: flex; justify-content: space-between; margin-top: 1px; padding-top: 9px; border-top: 1px solid var(--border); color: var(--muted); font-size: 11px; }
+.profile-version strong { color: var(--ink); font-weight: 600; }
 .profile-menu button { padding: 8px 9px; border: 0; border-radius: 8px; background: var(--lavender); color: var(--purple-dark); text-align: left; cursor: pointer; }
 
 .countdown-card { display: flex; min-height: 275px; flex-direction: column; align-items: center; padding: 16px 14px 12px; border-radius: 15px; background: var(--surface); text-align: center; }

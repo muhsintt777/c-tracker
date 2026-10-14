@@ -7,6 +7,7 @@ import {
   Plus,
   X
 } from "lucide-react";
+import packageInfo from "../../../package.json";
 import { format, parseISO } from "date-fns";
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { useAuth } from "../../app/AuthContext";
@@ -196,6 +197,10 @@ export function Dashboard() {
             {profileOpen && (
               <div className="profile-menu">
                 <span className="profile-email">{user?.email ?? "Signed in"}</span>
+                <div className="profile-version">
+                  <span>App version</span>
+                  <strong>{packageInfo.version}</strong>
+                </div>
                 <button type="button" onClick={() => void signOut()}>Sign out</button>
               </div>
             )}
