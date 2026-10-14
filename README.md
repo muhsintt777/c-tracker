@@ -33,7 +33,27 @@ The Firestore emulator is configured on port `8080`. Run it locally with:
 npx firebase emulators:start --only firestore --project demo-c-tracker
 ```
 
-Deployment is intentionally not configured on the `dev` branch. Hosting and production deployment instructions will be added when deployment is planned.
+## Production deployment
+
+Production hosting uses Firebase Hosting and publishes the Vite build from `dist/`. The hosting configuration serves the app as a single-page application, applies security headers, and gives fingerprinted build assets long-lived caching while keeping the entry point and service worker revalidatable.
+
+1. Create or select the production Firebase project. In Firebase Console, enable Google Authentication, create the Cloud Firestore database, and add the production Hosting domain to Authentication's authorized domains.
+2. Sign in to Firebase CLI and select the production project:
+
+   ```sh
+   npx firebase login
+   npx firebase use --add
+   ```
+
+   Select the production project and save it under a `prod` alias. The generated `.firebaserc` is local project selection; do not commit it unless the repository is intentionally being tied to that project.
+3. Create `.env.production.local` from `.env.example` and set the production web app's `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, and `VITE_FIREBASE_APP_ID`. Ensure `VITE_FIREBASE_PROJECT_ID` matches the project saved under the `prod` alias. These are browser-side Firebase configuration values, not server secrets; restrict the API key to the production app as appropriate in Google Cloud.
+4. Deploy the Hosting site and the repository's Firestore rules and indexes:
+
+   ```sh
+   npm run deploy:prod
+   ```
+
+   The script builds before deploying and explicitly targets the `prod` alias. It deploys Hosting, Firestore rules, and indexes; it does not provision Firebase products or deploy database contents.
 
 ## Build
 

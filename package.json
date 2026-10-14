@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy:prod": "npm run build && firebase deploy --only hosting,firestore:rules,firestore:indexes --project prod"
   },
   "dependencies": {
     "date-fns": "^4.1.0",
