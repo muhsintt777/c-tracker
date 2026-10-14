@@ -1,0 +1,64 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedInAs(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    function validDate(value) {
+      return value is string
+        && value.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+        && int(value.split('-')[0]) > 0
+        && int(value.split('-')[1]) >= 1
+        && int(value.split('-')[1]) <= 12
+        && int(value.split('-')[2]) >= 1
+        && int(value.split('-')[2]) <= daysInMonth(
+          int(value.split('-')[0]),
+          int(value.split('-')[1])
+        );
+    }
+
+    function daysInMonth(year, month) {
+      return month == 2
+        ? (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0) ? 29 : 28)
+        : (month == 4 || month == 6 || month == 9 || month == 11 ? 30 : 31);
+    }
+
+    function validPeriod(data) {
+      return data.keys().hasAll(['startDate', 'endDate', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['startDate', 'endDate', 'createdAt', 'updatedAt'])
+        && validDate(data.startDate)
+        && (data.endDate == null
+          || (validDate(data.endDate) && data.endDate >= data.startDate))
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    match /users/{uid} {
+      allow read: if signedInAs(uid);
+      allow create: if signedInAs(uid)
+        && request.resource.data.keys().hasAll(['createdAt', 'updatedAt'])
+        && request.resource.data.keys().hasOnly(['createdAt', 'updatedAt'])
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+      allow update: if signedInAs(uid)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['updatedAt'])
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.updatedAt == request.time;
+      allow delete: if false;
+
+      match /periods/{periodId} {
+        allow read: if signedInAs(uid);
+        allow create: if signedInAs(uid)
+          && validPeriod(request.resource.data)
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.updatedAt == request.time;
+        allow update: if signedInAs(uid)
+          && validPeriod(request.resource.data)
+          && request.resource.data.createdAt == resource.data.createdAt
+          && request.resource.data.updatedAt == request.time;
+        allow delete: if signedInAs(uid);
+      }
+    }
+  }
+}
