@@ -9,7 +9,7 @@ export function LoginPage() {
     <main className="login-screen">
       <section className="login-card" aria-labelledby="login-title">
         <div className="brand-mark"><Activity size={26} strokeWidth={2} /></div>
-        <p className="eyebrow">YOUR PERSONAL CYCLE TRACKER</p>
+        <p className="eyebrow">My GAAAAL’S CYCLE TRACKER</p>
         <h1 id="login-title">A little more in tune.</h1>
         <p className="login-description">
           Keep track of your period and get a gentle estimate of what’s ahead.
