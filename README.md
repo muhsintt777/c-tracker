@@ -8,7 +8,7 @@ Requirements: Node.js 20+, npm, and a Firebase project.
 
 1. Install dependencies with `npm install`.
 2. Create a Firebase web app and copy `.env.example` to `.env.local`.
-3. Fill in `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, and `VITE_FIREBASE_APP_ID`.
+3. Set `VITE_APP_NAME` and fill in `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, and `VITE_FIREBASE_APP_ID`.
 4. In Firebase Console, enable the Email/Password sign-in provider, add your user under Authentication > Users, and add your local and production hostnames to the authorized domains.
 5. Start the development server with `npm run dev`.
 
@@ -46,7 +46,7 @@ Production hosting uses Firebase Hosting and publishes the Vite build from `dist
    ```
 
    Select the production project and save it under a `prod` alias. The generated `.firebaserc` is local project selection; do not commit it unless the repository is intentionally being tied to that project.
-3. Create `.env.production.local` from `.env.example` and set the production web app's `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, and `VITE_FIREBASE_APP_ID`. Ensure `VITE_FIREBASE_PROJECT_ID` matches the project saved under the `prod` alias. These are browser-side Firebase configuration values, not server secrets; restrict the API key to the production app as appropriate in Google Cloud.
+3. Create `.env.production.local` from `.env.example` and set `VITE_APP_NAME` plus the production web app's `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, and `VITE_FIREBASE_APP_ID`. Ensure `VITE_FIREBASE_PROJECT_ID` matches the project saved under the `prod` alias. These are browser-side Firebase configuration values, not server secrets; restrict the API key to the production app as appropriate in Google Cloud.
 4. Deploy the Hosting site and the repository's Firestore rules and indexes:
 
    ```sh
