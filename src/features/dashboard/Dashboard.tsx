@@ -17,6 +17,7 @@ import { createPeriod, removePeriod, subscribeToPeriods, updatePeriod } from "..
 
 const today = () => format(new Date(), "yyyy-MM-dd");
 const displayDate = (value: string, pattern = "MMMM d, yyyy") => format(parseISO(value), pattern);
+const isDevelopmentBuild = import.meta.env.MODE === "dev";
 
 type DialogState =
   | { kind: "start" }
@@ -199,7 +200,10 @@ export function Dashboard() {
                 <span className="profile-email">{user?.email ?? "Signed in"}</span>
                 <div className="profile-version">
                   <span>App version</span>
-                  <strong>{packageInfo.version}</strong>
+                  <span className="profile-version-value">
+                    <strong>{packageInfo.version}</strong>
+                    {isDevelopmentBuild && <span className="build-label">Development</span>}
+                  </span>
                 </div>
                 <button type="button" onClick={() => void signOut()}>Sign out</button>
               </div>
