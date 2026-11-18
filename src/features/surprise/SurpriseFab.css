@@ -1,0 +1,138 @@
+.surprise-fab {
+  position: absolute;
+  right: 12px;
+  bottom: 96px;
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid #e0d7e7;
+  border-radius: 50%;
+  background: white;
+  color: var(--purple-dark);
+  box-shadow: 0 4px 12px #71569426;
+  cursor: pointer;
+  animation: surprise-bob 1.35s ease-in-out infinite;
+  transition: background .15s ease;
+}
+
+.surprise-fab:hover {
+  background: var(--lavender);
+  animation-play-state: paused;
+}
+
+.surprise-fab:active {
+  transform: translateY(0) scale(.96);
+}
+
+@keyframes surprise-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.surprise-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(35, 28, 41, .38);
+}
+
+.surprise-dialog {
+  width: min(100%, 410px);
+  max-height: calc(100dvh - 36px);
+  overflow: auto;
+  padding: 19px;
+  border: 1px solid #f1eaf3;
+  border-radius: 17px;
+  background: white;
+  box-shadow: 0 18px 60px #21182b33;
+}
+
+.surprise-dialog-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.surprise-dialog-heading h2 {
+  margin: 0;
+  font-size: 17px;
+  letter-spacing: -.025em;
+}
+
+.surprise-dialog-close {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--purple-dark);
+  cursor: pointer;
+}
+
+.surprise-dialog-close:hover {
+  background: var(--lavender);
+}
+
+.surprise-dialog-description {
+  margin: 7px 0 17px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.surprise-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 21px;
+}
+
+.surprise-dialog-action {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 15px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--purple);
+  color: white;
+  font-size: 12px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.surprise-dialog-action:hover {
+  background: var(--purple-dark);
+}
+
+.surprise-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+@media (max-width: 480px) {
+  .surprise-fab {
+    bottom: calc(96px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .surprise-fab {
+    animation: none;
+  }
+}
