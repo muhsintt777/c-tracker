@@ -63,6 +63,7 @@
   opacity: 0;
   animation-name: surprise-confetti-fall;
   animation-timing-function: cubic-bezier(.18, .73, .35, 1);
+  animation-iteration-count: infinite;
   animation-fill-mode: both;
 }
 
@@ -107,14 +108,19 @@
   animation: surprise-badge-bounce .8s cubic-bezier(.34, 1.56, .64, 1) .12s both;
 }
 
+.surprise-celebration-badge > svg:nth-child(2) {
+  animation: surprise-trophy-celebrate 1.6s ease-in-out .8s infinite;
+  transform-origin: center bottom;
+}
+
 .surprise-sparkle {
   color: #d85e7b;
-  animation: surprise-sparkle .85s ease-in-out .45s both;
+  animation: surprise-sparkle 1.25s ease-in-out .45s infinite;
 }
 
 .surprise-sparkle:last-child {
   color: #3e9c83;
-  animation-delay: .56s;
+  animation-delay: .75s;
 }
 
 .surprise-dialog-close {
@@ -213,10 +219,16 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes surprise-trophy-celebrate {
+  0%, 100% { transform: translateY(0) rotate(0) scale(1); }
+  25% { transform: translateY(-7px) rotate(-5deg) scale(1.05); }
+  50% { transform: translateY(0) rotate(0) scale(1); }
+  75% { transform: translateY(-5px) rotate(5deg) scale(1.03); }
+}
+
 @keyframes surprise-sparkle {
-  0% { opacity: 0; transform: scale(.2) rotate(-30deg); }
-  55% { opacity: 1; transform: scale(1.25) rotate(12deg); }
-  100% { opacity: 1; transform: scale(1) rotate(0); }
+  0%, 100% { opacity: .65; transform: scale(.82) rotate(-10deg); }
+  50% { opacity: 1; transform: scale(1.18) rotate(18deg); }
 }
 
 @keyframes surprise-confetti-fall {
@@ -230,6 +242,7 @@
   .surprise-dialog-backdrop,
   .surprise-dialog,
   .surprise-celebration-badge,
+  .surprise-celebration-badge > svg:nth-child(2),
   .surprise-sparkle,
   .surprise-dialog-description,
   .surprise-dialog-actions,
