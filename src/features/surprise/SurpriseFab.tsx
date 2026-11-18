@@ -2,12 +2,12 @@ import "./SurpriseFab.css";
 import { CircleHelp, Sparkles, Trophy, X } from "lucide-react";
 import { useState, type CSSProperties } from "react";
 
-const confettiPieces = Array.from({ length: 24 }, (_, index) => ({
+const confettiPieces = Array.from({ length: 48 }, (_, index) => ({
   left: `${(index * 41) % 100}%`,
-  delay: `${0.08 + (index % 8) * 0.055}s`,
-  duration: `${1.35 + (index % 5) * 0.14}s`,
+  delay: `${0.08 + (index % 12) * 0.045}s`,
+  duration: `${1.35 + (index % 6) * 0.14}s`,
   drift: `${-48 + (index * 29) % 96}px`,
-  rotation: `${240 + (index % 4) * 120}deg`
+  rotation: `${240 + (index % 5) * 108}deg`
 }));
 
 export function SurpriseFab() {
