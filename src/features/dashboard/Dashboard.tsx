@@ -15,6 +15,7 @@ import { useAuth } from "../../app/AuthContext";
 import { analyzeCycle, isCalendarDate, periodDuration } from "../../domain/cycle/calculations";
 import type { Period } from "../../domain/cycle/types";
 import { createPeriod, removePeriod, subscribeToPeriods, updatePeriod } from "../../services/periodRepository";
+import { SurpriseFab } from "../surprise/SurpriseFab";
 
 const today = () => format(new Date(), "yyyy-MM-dd");
 const displayDate = (value: string, pattern = "MMMM d, yyyy") => format(parseISO(value), pattern);
@@ -307,6 +308,7 @@ export function Dashboard() {
           </p>
         )}
 
+        <SurpriseFab />
         <button className="fab" type="button" onClick={() => openDialog(ongoingPeriod ? { kind: "end", period: ongoingPeriod } : { kind: "start" })} aria-label={ongoingPeriod ? "End period" : "Track period"}>
           <Plus size={24} />
           <span className="sr-only">{ongoingPeriod ? "End period" : "Track period"}</span>
