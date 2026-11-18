@@ -310,7 +310,6 @@ export function Dashboard() {
           <Plus size={24} />
           <span className="sr-only">{ongoingPeriod ? "End period" : "Track period"}</span>
         </button>
-        <footer className="app-footer">Estimates are based on your recorded dates and may vary.</footer>
       </section>
 
       {dialog && (

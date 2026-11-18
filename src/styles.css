@@ -102,7 +102,6 @@ button:focus-visible, input:focus-visible { outline: 3px solid #b39bd3; outline-
 .fab { position: absolute; right: 12px; bottom: 32px; display: grid; width: 52px; height: 52px; place-items: center; border: 0; border-radius: 50%; background: var(--purple); color: #fff; box-shadow: 0 5px 13px #71569433; cursor: pointer; transition: background .15s ease, transform .15s ease; }
 .fab:hover { transform: translateY(-2px); background: var(--purple-dark); }
 .fab:active { transform: translateY(0); }
-.app-footer { position: absolute; right: 72px; bottom: 15px; left: 14px; color: #81798c; font-size: 9px; text-align: center; }
 
 .inline-alert { display: flex; align-items: center; gap: 8px; margin: 10px 0; padding: 10px 11px; border: 1px solid #f1d5d0; border-radius: 10px; background: #fff8f6; color: #9c4a3d; font-size: 11px; }
 .inline-alert svg { flex: 0 0 auto; }
@@ -149,7 +148,6 @@ button:focus-visible, input:focus-visible { outline: 3px solid #b39bd3; outline-
   .page-shell { min-height: 100dvh; padding: 0; background: #f7f4f1; }
   .tracker-app { width: 100%; min-height: 100dvh; padding-top: max(16px, env(safe-area-inset-top)); padding-bottom: calc(54px + env(safe-area-inset-bottom)); border: 0; border-radius: 0; box-shadow: none; }
   .fab { bottom: calc(32px + env(safe-area-inset-bottom)); }
-  .app-footer { bottom: calc(15px + env(safe-area-inset-bottom)); }
   .countdown-card { min-height: 275px; }
 }
 
