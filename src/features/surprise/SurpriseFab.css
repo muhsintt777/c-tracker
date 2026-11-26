@@ -23,12 +23,17 @@
 }
 
 .surprise-fab:active {
-  transform: translateY(0) scale(.96);
+  transform: translateY(0) scale(0.96);
 }
 
 @keyframes surprise-bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 .surprise-dialog-backdrop {
@@ -40,7 +45,7 @@
   padding: 18px;
   overflow: hidden;
   background: var(--color-overlay-strong);
-  animation: surprise-backdrop-in .24s ease-out both;
+  animation: surprise-backdrop-in 0.24s ease-out both;
 }
 
 .surprise-confetti {
@@ -62,7 +67,7 @@
   background: var(--color-accent-gold-soft);
   opacity: 0;
   animation-name: surprise-confetti-fall;
-  animation-timing-function: cubic-bezier(.18, .73, .35, 1);
+  animation-timing-function: cubic-bezier(0.18, 0.73, 0.35, 1);
   animation-iteration-count: infinite;
   animation-fill-mode: both;
 }
@@ -91,10 +96,14 @@
   padding: 27px 24px 22px;
   border: 1px solid var(--color-warning-border);
   border-radius: var(--radius-xl);
-  background: linear-gradient(145deg, var(--color-surface) 0%, var(--color-warning-soft) 100%);
+  background: linear-gradient(
+    145deg,
+    var(--color-surface) 0%,
+    var(--color-warning-soft) 100%
+  );
   box-shadow: var(--shadow-celebration);
   text-align: center;
-  animation: surprise-dialog-pop .72s cubic-bezier(.16, 1, .3, 1) both;
+  animation: surprise-dialog-pop 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .surprise-celebration-badge {
@@ -105,22 +114,23 @@
   justify-content: space-between;
   margin: 0 auto 12px;
   color: var(--color-accent-gold);
-  animation: surprise-badge-bounce .8s cubic-bezier(.34, 1.56, .64, 1) .12s both;
+  animation: surprise-badge-bounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.12s
+    both;
 }
 
 .surprise-celebration-badge > svg:nth-child(2) {
-  animation: surprise-trophy-celebrate 1.6s ease-in-out .8s infinite;
+  animation: surprise-trophy-celebrate 1.6s ease-in-out 0.8s infinite;
   transform-origin: center bottom;
 }
 
 .surprise-sparkle {
   color: var(--color-accent-pink);
-  animation: surprise-sparkle 1.25s ease-in-out .45s infinite;
+  animation: surprise-sparkle 1.25s ease-in-out 0.45s infinite;
 }
 
 .surprise-sparkle:last-child {
   color: var(--color-accent-green);
-  animation-delay: .75s;
+  animation-delay: 0.75s;
 }
 
 .surprise-dialog-close {
@@ -150,14 +160,14 @@
   font-size: var(--text-2xl);
   font-weight: 750;
   line-height: 1.45;
-  animation: surprise-copy-in .5s ease-out .4s both;
+  animation: surprise-copy-in 0.5s ease-out 0.4s both;
 }
 
 .surprise-dialog-actions {
   display: flex;
   justify-content: center;
   margin-top: 22px;
-  animation: surprise-copy-in .5s ease-out .5s both;
+  animation: surprise-copy-in 0.5s ease-out 0.5s both;
 }
 
 .surprise-dialog-action {
@@ -198,44 +208,99 @@
 }
 
 @keyframes surprise-backdrop-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes surprise-dialog-pop {
-  0% { opacity: 0; transform: translateY(38px) scale(.72) rotate(-4deg); }
-  58% { opacity: 1; transform: translateY(-10px) scale(1.035) rotate(1.2deg); }
-  78% { transform: translateY(3px) scale(.99) rotate(-.4deg); }
-  100% { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+  0% {
+    opacity: 0;
+    transform: translateY(38px) scale(0.72) rotate(-4deg);
+  }
+  58% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.035) rotate(1.2deg);
+  }
+  78% {
+    transform: translateY(3px) scale(0.99) rotate(-0.4deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0);
+  }
 }
 
 @keyframes surprise-badge-bounce {
-  0% { opacity: 0; transform: translateY(16px) scale(.35) rotate(-18deg); }
-  60% { opacity: 1; transform: translateY(-5px) scale(1.12) rotate(4deg); }
-  100% { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.35) rotate(-18deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.12) rotate(4deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0);
+  }
 }
 
 @keyframes surprise-copy-in {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes surprise-trophy-celebrate {
-  0%, 100% { transform: translateY(0) rotate(0) scale(1); }
-  25% { transform: translateY(-7px) rotate(-5deg) scale(1.05); }
-  50% { transform: translateY(0) rotate(0) scale(1); }
-  75% { transform: translateY(-5px) rotate(5deg) scale(1.03); }
+  0%,
+  100% {
+    transform: translateY(0) rotate(0) scale(1);
+  }
+  25% {
+    transform: translateY(-7px) rotate(-5deg) scale(1.05);
+  }
+  50% {
+    transform: translateY(0) rotate(0) scale(1);
+  }
+  75% {
+    transform: translateY(-5px) rotate(5deg) scale(1.03);
+  }
 }
 
 @keyframes surprise-sparkle {
-  0%, 100% { opacity: .65; transform: scale(.82) rotate(-10deg); }
-  50% { opacity: 1; transform: scale(1.18) rotate(18deg); }
+  0%,
+  100% {
+    opacity: 0.65;
+    transform: scale(0.82) rotate(-10deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.18) rotate(18deg);
+  }
 }
 
 @keyframes surprise-confetti-fall {
-  0% { opacity: 0; transform: translate3d(0, -30px, 0) rotate(0); }
-  12% { opacity: 1; }
-  100% { opacity: 0; transform: translate3d(var(--confetti-drift), calc(100dvh + 50px), 0) rotate(var(--confetti-rotation)); }
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -30px, 0) rotate(0);
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--confetti-drift), calc(100dvh + 50px), 0)
+      rotate(var(--confetti-rotation));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

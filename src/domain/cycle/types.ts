@@ -16,7 +16,7 @@ export interface CyclePrediction {
   daysUntil: number;
   isPreliminary: boolean;
   intervalsUsed: number;
-  status: "upcoming" | "due" | "overdue";
+  status: 'upcoming' | 'due' | 'overdue';
 }
 
 export interface CycleAnalysis {

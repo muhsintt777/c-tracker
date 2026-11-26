@@ -1,13 +1,13 @@
-import "./SurpriseFab.css";
-import { CircleHelp, Sparkles, Trophy, X } from "lucide-react";
-import { useState, type CSSProperties } from "react";
+import './SurpriseFab.css';
+import { CircleHelp, Sparkles, Trophy, X } from 'lucide-react';
+import { useState, type CSSProperties } from 'react';
 
 const confettiPieces = Array.from({ length: 48 }, (_, index) => ({
   left: `${(index * 41) % 100}%`,
   delay: `${0.08 + (index % 12) * 0.045}s`,
   duration: `${1.35 + (index % 6) * 0.14}s`,
-  drift: `${-48 + (index * 29) % 96}px`,
-  rotation: `${240 + (index % 5) * 108}deg`
+  drift: `${-48 + ((index * 29) % 96)}px`,
+  rotation: `${240 + (index % 5) * 108}deg`,
 }));
 
 export function SurpriseFab() {
@@ -36,13 +36,15 @@ export function SurpriseFab() {
             {confettiPieces.map((piece, index) => (
               <span
                 key={index}
-                style={{
-                  left: piece.left,
-                  animationDelay: piece.delay,
-                  animationDuration: piece.duration,
-                  "--confetti-drift": piece.drift,
-                  "--confetti-rotation": piece.rotation
-                } as CSSProperties}
+                style={
+                  {
+                    left: piece.left,
+                    animationDelay: piece.delay,
+                    animationDuration: piece.duration,
+                    '--confetti-drift': piece.drift,
+                    '--confetti-rotation': piece.rotation,
+                  } as CSSProperties
+                }
               />
             ))}
           </div>
@@ -65,11 +67,18 @@ export function SurpriseFab() {
             >
               <X size={19} />
             </button>
-            <p className="surprise-dialog-description" id="surprise-dialog-title">
+            <p
+              className="surprise-dialog-description"
+              id="surprise-dialog-title"
+            >
               Congratulations to my gorgeous gaaal for 9.33 CGPA...🥳
             </p>
             <div className="surprise-dialog-actions">
-              <button className="surprise-dialog-action" type="button" onClick={() => setOpen(false)}>
+              <button
+                className="surprise-dialog-action"
+                type="button"
+                onClick={() => setOpen(false)}
+              >
                 Yeii...!
               </button>
             </div>

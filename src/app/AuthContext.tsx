@@ -2,11 +2,24 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
-  type User
-} from "firebase/auth";
-import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { auth, db, firebaseReady } from "../lib/firebase";
+  type User,
+} from 'firebase/auth';
+import {
+  doc,
+  getDoc,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from 'react';
+import { auth, db, firebaseReady } from '../lib/firebase';
 
 interface AuthContextValue {
   user: User | null;
@@ -21,21 +34,24 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 function authErrorMessage(error: unknown): string {
   if (error instanceof Error) {
-    const code = "code" in error ? String(error.code) : "";
+    const code = 'code' in error ? String(error.code) : '';
     if (
-      code === "auth/invalid-credential" ||
-      code === "auth/wrong-password" ||
-      code === "auth/user-not-found" ||
-      code === "auth/invalid-email"
+      code === 'auth/invalid-credential' ||
+      code === 'auth/wrong-password' ||
+      code === 'auth/user-not-found' ||
+      code === 'auth/invalid-email'
     ) {
-      return "Incorrect email or password.";
+      return 'Incorrect email or password.';
     }
-    if (code === "auth/too-many-requests") return "Too many attempts. Please try again later.";
-    if (code === "auth/operation-not-allowed") return "Email/password sign-in is not enabled in Firebase Authentication.";
-    if (code === "auth/network-request-failed") return "Network error. Check your connection and try again.";
+    if (code === 'auth/too-many-requests')
+      return 'Too many attempts. Please try again later.';
+    if (code === 'auth/operation-not-allowed')
+      return 'Email/password sign-in is not enabled in Firebase Authentication.';
+    if (code === 'auth/network-request-failed')
+      return 'Network error. Check your connection and try again.';
     return error.message;
   }
-  return "Something went wrong. Please try again.";
+  return 'Something went wrong. Please try again.';
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -61,7 +77,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       try {
-        const userRef = doc(firestore, "users", nextUser.uid);
+        const userRef = doc(firestore, 'users', nextUser.uid);
         const userSnapshot = await getDoc(userRef);
         if (!active) return;
         if (userSnapshot.exists()) {
@@ -69,7 +85,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         } else {
           await setDoc(userRef, {
             createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp()
+            updatedAt: serverTimestamp(),
           });
         }
       } catch (reason) {
@@ -86,7 +102,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function signIn(email: string, password: string) {
     if (!auth || !firebaseReady) {
-      setError("Add your Firebase web configuration to .env.local to enable sign-in.");
+      setError(
+        'Add your Firebase web configuration to .env.local to enable sign-in.',
+      );
       return;
     }
     setError(null);
@@ -109,20 +127,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const value = useMemo(() => ({
-    user,
-    loading,
-    error,
-    signIn,
-    signOut,
-    clearError: () => setError(null)
-  }), [user, loading, error]);
+  const value = useMemo(
+    () => ({
+      user,
+      loading,
+      error,
+      signIn,
+      signOut,
+      clearError: () => setError(null),
+    }),
+    [user, loading, error],
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth(): AuthContextValue {
   const context = useContext(AuthContext);
-  if (!context) throw new Error("useAuth must be used inside AuthProvider.");
+  if (!context) throw new Error('useAuth must be used inside AuthProvider.');
   return context;
 }

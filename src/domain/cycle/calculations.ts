@@ -1,5 +1,11 @@
-import { addDays, differenceInCalendarDays, format, isValid, parseISO } from "date-fns";
-import type { CycleAnalysis, CycleInterval, Period } from "./types";
+import {
+  addDays,
+  differenceInCalendarDays,
+  format,
+  isValid,
+  parseISO,
+} from 'date-fns';
+import type { CycleAnalysis, CycleInterval, Period } from './types';
 
 export const FALLBACK_CYCLE_LENGTH = 28;
 export const MAX_INTERVALS = 6;
@@ -9,7 +15,7 @@ export const MAX_PLAUSIBLE_CYCLE_LENGTH = 45;
 export function isCalendarDate(value: string): boolean {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
   const parsed = parseISO(value);
-  return isValid(parsed) && format(parsed, "yyyy-MM-dd") === value;
+  return isValid(parsed) && format(parsed, 'yyyy-MM-dd') === value;
 }
 
 export function compareCalendarDates(left: string, right: string): number {
@@ -17,22 +23,31 @@ export function compareCalendarDates(left: string, right: string): number {
 }
 
 export function addCalendarDays(value: string, days: number): string {
-  return format(addDays(parseISO(value), days), "yyyy-MM-dd");
+  return format(addDays(parseISO(value), days), 'yyyy-MM-dd');
 }
 
 export function periodDuration(startDate: string, endDate: string): number {
-  if (!isCalendarDate(startDate) || !isCalendarDate(endDate) || endDate < startDate) {
-    throw new RangeError("A valid end date on or after the start date is required.");
+  if (
+    !isCalendarDate(startDate) ||
+    !isCalendarDate(endDate) ||
+    endDate < startDate
+  ) {
+    throw new RangeError(
+      'A valid end date on or after the start date is required.',
+    );
   }
   return compareCalendarDates(endDate, startDate) + 1;
 }
 
 export function validatePeriod(period: Period): string | null {
-  if (!period.id.trim()) return "Period ID is required.";
-  if (!isCalendarDate(period.startDate)) return "Start date must be a valid calendar date.";
+  if (!period.id.trim()) return 'Period ID is required.';
+  if (!isCalendarDate(period.startDate))
+    return 'Start date must be a valid calendar date.';
   if (period.endDate !== null) {
-    if (!isCalendarDate(period.endDate)) return "End date must be a valid calendar date.";
-    if (period.endDate < period.startDate) return "End date cannot be before the start date.";
+    if (!isCalendarDate(period.endDate))
+      return 'End date must be a valid calendar date.';
+    if (period.endDate < period.startDate)
+      return 'End date cannot be before the start date.';
   }
   return null;
 }
@@ -65,8 +80,13 @@ export function getCycleIntervals(periods: Period[]): {
   const nonOverlapping: Period[] = [];
   for (const period of validPeriods) {
     const previous = nonOverlapping.at(-1);
-    if (previous && (previous.endDate === null || previous.endDate >= period.startDate)) {
-      issues.push(`Overlapping periods starting ${previous.startDate} and ${period.startDate}.`);
+    if (
+      previous &&
+      (previous.endDate === null || previous.endDate >= period.startDate)
+    ) {
+      issues.push(
+        `Overlapping periods starting ${previous.startDate} and ${period.startDate}.`,
+      );
       nonOverlapping.pop();
       continue;
     }
@@ -78,8 +98,13 @@ export function getCycleIntervals(periods: Period[]): {
     const previous = nonOverlapping[index - 1];
     const current = nonOverlapping[index];
     const days = compareCalendarDates(current.startDate, previous.startDate);
-    if (days < MIN_PLAUSIBLE_CYCLE_LENGTH || days > MAX_PLAUSIBLE_CYCLE_LENGTH) {
-      issues.push(`Cycle interval of ${days} days (${previous.startDate} to ${current.startDate}) needs review.`);
+    if (
+      days < MIN_PLAUSIBLE_CYCLE_LENGTH ||
+      days > MAX_PLAUSIBLE_CYCLE_LENGTH
+    ) {
+      issues.push(
+        `Cycle interval of ${days} days (${previous.startDate} to ${current.startDate}) needs review.`,
+      );
       continue;
     }
     intervals.push({ from: previous.startDate, to: current.startDate, days });
@@ -89,7 +114,8 @@ export function getCycleIntervals(periods: Period[]): {
 }
 
 export function analyzeCycle(periods: Period[], today: string): CycleAnalysis {
-  if (!isCalendarDate(today)) throw new RangeError("Today must be a valid calendar date.");
+  if (!isCalendarDate(today))
+    throw new RangeError('Today must be a valid calendar date.');
 
   const { intervals, issues, validPeriods } = getCycleIntervals(periods);
   if (validPeriods.length === 0) {
@@ -101,7 +127,10 @@ export function analyzeCycle(periods: Period[], today: string): CycleAnalysis {
   const isPreliminary = selectedIntervals.length === 0;
   const cycleLength = isPreliminary
     ? FALLBACK_CYCLE_LENGTH
-    : Math.round(selectedIntervals.reduce((sum, interval) => sum + interval.days, 0) / selectedIntervals.length);
+    : Math.round(
+        selectedIntervals.reduce((sum, interval) => sum + interval.days, 0) /
+          selectedIntervals.length,
+      );
   const estimatedDate = addCalendarDays(latestStart, cycleLength);
   const daysUntil = compareCalendarDates(estimatedDate, today);
 
@@ -112,9 +141,9 @@ export function analyzeCycle(periods: Period[], today: string): CycleAnalysis {
       daysUntil,
       isPreliminary,
       intervalsUsed: selectedIntervals.length,
-      status: daysUntil > 0 ? "upcoming" : daysUntil === 0 ? "due" : "overdue"
+      status: daysUntil > 0 ? 'upcoming' : daysUntil === 0 ? 'due' : 'overdue',
     },
     validPeriods,
-    issues
+    issues,
   };
 }

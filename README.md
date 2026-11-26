@@ -62,13 +62,13 @@ The project uses Vite modes named `dev` and `prod`. Shared values can go in `.en
 
 ## Build and Deploy
 
-| Command | Purpose |
-| --- | --- |
-| `npm run dev` | Start Vite in `dev` mode. |
-| `npm run build:dev` | Run the TypeScript project build and create a `dev`-mode bundle. |
-| `npm run build:prod` | Run the TypeScript project build and create a `prod`-mode bundle. |
-| `npm run preview` | Preview the existing `dist/` build locally. |
-| `npm run deploy:dev` | Build in `dev` mode and deploy Firebase Hosting to the `dev` project. |
+| Command               | Purpose                                                                 |
+| --------------------- | ----------------------------------------------------------------------- |
+| `npm run dev`         | Start Vite in `dev` mode.                                               |
+| `npm run build:dev`   | Run the TypeScript project build and create a `dev`-mode bundle.        |
+| `npm run build:prod`  | Run the TypeScript project build and create a `prod`-mode bundle.       |
+| `npm run preview`     | Preview the existing `dist/` build locally.                             |
+| `npm run deploy:dev`  | Build in `dev` mode and deploy Firebase Hosting to the `dev` project.   |
 | `npm run deploy:prod` | Build in `prod` mode and deploy Firebase Hosting to the `prod` project. |
 
 Set the appropriate `VITE_APP_NAME`, `VITE_APP_SHORT_NAME`, and Firebase values in the environment for each mode. For mode-specific local files, use `.env.dev.local` and `.env.prod.local`. Configure the Firebase CLI project aliases before deploying. The deployment scripts publish Hosting only; Firestore rules and indexes are configured in `firebase.json` and can be deployed separately with `npx firebase deploy --only firestore --project dev` or `--project prod`.
