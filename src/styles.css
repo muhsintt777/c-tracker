@@ -21,6 +21,7 @@
   --color-brand-strong: #715694;
   --color-brand-soft: #f0eaf6;
   --color-brand-track: #e9e3ee;
+  --color-on-brand: #ffffff;
   --color-focus: #b39bd3;
   --color-overlay: rgba(35, 28, 41, 0.38);
   --color-overlay-strong: rgba(35, 28, 41, 0.48);
@@ -79,6 +80,53 @@
   -moz-osx-font-smoothing: grayscale;
   font-optical-sizing: auto;
   font-weight: 400;
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-page: #141219;
+  --color-app: #19161e;
+  --color-surface: #24202b;
+  --color-surface-hover: #302a37;
+  --color-surface-muted: #201c26;
+  --color-surface-outline: rgba(190, 163, 220, 0.16);
+  --color-text: #eee9f2;
+  --color-text-strong: #ffffff;
+  --color-text-muted: #aaa2b5;
+  --color-text-label: #d4cedc;
+  --color-border: #3a3343;
+  --color-border-strong: #4b4256;
+  --color-brand: #aa8bcc;
+  --color-brand-strong: #bea3dc;
+  --color-brand-soft: #342b40;
+  --color-brand-track: #44394f;
+  --color-on-brand: #18131e;
+  --color-focus: #c2a5e2;
+  --color-overlay: rgba(4, 3, 7, 0.62);
+  --color-overlay-strong: rgba(4, 3, 7, 0.76);
+  --color-success: #72c49f;
+  --color-success-strong: #8bd5b4;
+  --color-success-soft: #19382c;
+  --color-success-dot: #61ba91;
+  --color-warning: #e1bd76;
+  --color-warning-soft: #392d1b;
+  --color-warning-border: #5c492a;
+  --color-danger: #ef8d98;
+  --color-danger-soft: #3b2229;
+  --color-danger-border: #68404a;
+  --color-danger-detail: #ffabb5;
+  --color-accent-gold: #e1b45b;
+  --color-accent-gold-soft: #b98b36;
+  --color-accent-pink: #f194aa;
+  --color-accent-pink-soft: #cb7187;
+  --color-accent-green: #6ccbab;
+
+  --shadow-raised: 0 16px 48px rgba(0, 0, 0, 0.28);
+  --shadow-overlay: 0 20px 64px rgba(0, 0, 0, 0.42);
+  --shadow-celebration: 0 24px 72px rgba(0, 0, 0, 0.5);
+  --shadow-small: 0 6px 18px rgba(0, 0, 0, 0.3);
 }
 
 * {
@@ -156,7 +204,7 @@ input:focus-visible {
   border: 0;
   border-radius: var(--radius-md);
   background: var(--color-brand);
-  color: var(--color-surface);
+  color: var(--color-on-brand);
   font-size: var(--text-md);
   font-weight: 650;
   cursor: pointer;

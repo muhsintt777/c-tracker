@@ -5,6 +5,7 @@ import {
   Check,
   ChevronRight,
   CircleUserRound,
+  Moon,
   Plus,
   X,
 } from 'lucide-react';
@@ -19,6 +20,7 @@ import {
   type FormEvent,
 } from 'react';
 import { useAuth } from '../../app/AuthContext';
+import { useTheme } from '../../app/themeStore';
 import {
   analyzeCycle,
   isCalendarDate,
@@ -38,6 +40,8 @@ const displayDate = (value: string, pattern = 'MMMM d, yyyy') =>
   format(parseISO(value), pattern);
 const isDevelopmentBuild = import.meta.env.MODE === 'dev';
 
+// todo: configure absolute imports
+
 type DialogState =
   | { kind: 'start' }
   | { kind: 'end'; period: Period }
@@ -47,6 +51,7 @@ type DialogState =
 
 export function Dashboard() {
   const { user, signOut, error: authError } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [periods, setPeriods] = useState<Period[]>([]);
   const [dataError, setDataError] = useState<string | null>(null);
   const [loadingPeriods, setLoadingPeriods] = useState(true);
@@ -261,7 +266,24 @@ export function Dashboard() {
                     )}
                   </span>
                 </div>
-                <button type="button" onClick={() => void signOut()}>
+                <button
+                  className="theme-toggle"
+                  type="button"
+                  role="switch"
+                  aria-checked={theme === 'dark'}
+                  onClick={toggleTheme}
+                >
+                  <span className="theme-toggle-label">
+                    <Moon size={16} />
+                    Dark theme
+                  </span>
+                  <span className="theme-switch" aria-hidden="true" />
+                </button>
+                <button
+                  className="profile-signout"
+                  type="button"
+                  onClick={() => void signOut()}
+                >
                   Sign out
                 </button>
               </div>

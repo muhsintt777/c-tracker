@@ -102,7 +102,7 @@
   font-size: var(--text-2xs);
   font-weight: 650;
 }
-.profile-menu button {
+.profile-signout {
   padding: 8px 9px;
   border: 0;
   border-radius: var(--radius-sm);
@@ -110,6 +110,61 @@
   color: var(--color-brand-strong);
   text-align: left;
   cursor: pointer;
+}
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 9px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+}
+.theme-toggle:hover {
+  background: var(--color-surface-hover);
+}
+.theme-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-md);
+  font-weight: 600;
+}
+.theme-switch {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  flex: 0 0 auto;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
+}
+.theme-switch::after {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-round);
+  background: var(--color-text-muted);
+  content: '';
+  transition:
+    background var(--transition-fast),
+    transform var(--transition-fast);
+}
+.theme-toggle[aria-checked='true'] .theme-switch {
+  border-color: var(--color-brand);
+  background: var(--color-brand);
+}
+.theme-toggle[aria-checked='true'] .theme-switch::after {
+  background: var(--color-on-brand);
+  transform: translateX(16px);
 }
 
 .countdown-card {
@@ -346,7 +401,7 @@
   border: 0;
   border-radius: var(--radius-round);
   background: var(--color-brand);
-  color: var(--color-surface);
+  color: var(--color-on-brand);
   box-shadow: var(--shadow-small);
   cursor: pointer;
   transition:
@@ -467,7 +522,7 @@
 }
 .danger-button {
   background: var(--color-danger);
-  color: var(--color-surface);
+  color: var(--color-on-brand);
 }
 .text-danger-button {
   padding: 8px 4px;
