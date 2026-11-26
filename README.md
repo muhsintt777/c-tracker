@@ -82,3 +82,7 @@ npx firebase emulators:start --only firestore --project demo-c-tracker
 ## Verification
 
 There is currently no automated test script configured. The build commands above run TypeScript checks before generating the Vite bundle. The Firestore emulator can be used for local backend development.
+
+# Current Build Size
+
+precache 15 entries (1011.96 KiB)
