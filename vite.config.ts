@@ -15,8 +15,8 @@ export default defineConfig(({ mode }) => {
         name: env.VITE_APP_NAME || "Cycle Tracker",
         short_name: env.VITE_APP_SHORT_NAME || "Cycle",
         description: "A private, simple period cycle tracker.",
-        theme_color: "#f6f3ef",
-        background_color: "#f6f3ef",
+        theme_color: "#f7f4f1",
+        background_color: "#f7f4f1",
         display: "standalone",
         start_url: "/",
         icons: [

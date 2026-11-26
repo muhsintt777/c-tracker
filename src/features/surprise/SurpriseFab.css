@@ -7,18 +7,18 @@
   height: 52px;
   place-items: center;
   padding: 0;
-  border: 1px solid #e0d7e7;
-  border-radius: 50%;
-  background: white;
-  color: var(--purple-dark);
-  box-shadow: 0 4px 12px #71569426;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-round);
+  background: var(--color-surface);
+  color: var(--color-brand-strong);
+  box-shadow: var(--shadow-small);
   cursor: pointer;
   animation: surprise-bob 1.35s ease-in-out infinite;
-  transition: background .15s ease;
+  transition: background var(--transition-fast);
 }
 
 .surprise-fab:hover {
-  background: var(--lavender);
+  background: var(--color-brand-soft);
   animation-play-state: paused;
 }
 
@@ -39,7 +39,7 @@
   place-items: center;
   padding: 18px;
   overflow: hidden;
-  background: rgba(35, 28, 41, .48);
+  background: var(--color-overlay-strong);
   animation: surprise-backdrop-in .24s ease-out both;
 }
 
@@ -58,8 +58,8 @@
   top: -24px;
   width: 9px;
   height: 16px;
-  border-radius: 2px;
-  background: #f2bd3f;
+  border-radius: var(--radius-xs);
+  background: var(--color-accent-gold-soft);
   opacity: 0;
   animation-name: surprise-confetti-fall;
   animation-timing-function: cubic-bezier(.18, .73, .35, 1);
@@ -70,16 +70,16 @@
 .surprise-confetti span:nth-child(4n + 2) {
   width: 11px;
   height: 11px;
-  border-radius: 50%;
-  background: #df627f;
+  border-radius: var(--radius-round);
+  background: var(--color-accent-pink-soft);
 }
 
 .surprise-confetti span:nth-child(4n + 3) {
-  background: #3e9c83;
+  background: var(--color-accent-green);
 }
 
 .surprise-confetti span:nth-child(4n + 4) {
-  background: #8266a8;
+  background: var(--color-brand);
 }
 
 .surprise-dialog {
@@ -89,10 +89,10 @@
   max-height: calc(100dvh - 36px);
   overflow: auto;
   padding: 27px 24px 22px;
-  border: 1px solid #f1e2c4;
-  border-radius: 17px;
-  background: linear-gradient(145deg, #fff 0%, #fffaf0 100%);
-  box-shadow: 0 22px 70px #21182b45;
+  border: 1px solid var(--color-warning-border);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(145deg, var(--color-surface) 0%, var(--color-warning-soft) 100%);
+  box-shadow: var(--shadow-celebration);
   text-align: center;
   animation: surprise-dialog-pop .72s cubic-bezier(.16, 1, .3, 1) both;
 }
@@ -104,7 +104,7 @@
   align-items: center;
   justify-content: space-between;
   margin: 0 auto 12px;
-  color: #b77b18;
+  color: var(--color-accent-gold);
   animation: surprise-badge-bounce .8s cubic-bezier(.34, 1.56, .64, 1) .12s both;
 }
 
@@ -114,12 +114,12 @@
 }
 
 .surprise-sparkle {
-  color: #d85e7b;
+  color: var(--color-accent-pink);
   animation: surprise-sparkle 1.25s ease-in-out .45s infinite;
 }
 
 .surprise-sparkle:last-child {
-  color: #3e9c83;
+  color: var(--color-accent-green);
   animation-delay: .75s;
 }
 
@@ -133,21 +133,21 @@
   place-items: center;
   padding: 0;
   border: 0;
-  border-radius: 50%;
+  border-radius: var(--radius-round);
   background: transparent;
-  color: var(--purple-dark);
+  color: var(--color-brand-strong);
   cursor: pointer;
 }
 
 .surprise-dialog-close:hover {
-  background: #f4e9f0;
+  background: var(--color-brand-soft);
 }
 
 .surprise-dialog-description {
   margin: 8px auto 0;
   max-width: 330px;
-  color: #34283f;
-  font-size: 21px;
+  color: var(--color-text-strong);
+  font-size: var(--text-2xl);
   font-weight: 750;
   line-height: 1.45;
   animation: surprise-copy-in .5s ease-out .4s both;
@@ -167,16 +167,17 @@
   justify-content: center;
   padding: 0 15px;
   border: 0;
-  border-radius: 10px;
-  background: var(--purple);
-  color: white;
-  font-size: 12px;
+  border-radius: var(--radius-md);
+  background: var(--color-brand);
+  color: var(--color-surface);
+  font-size: var(--text-md);
   font-weight: 650;
   cursor: pointer;
+  transition: background var(--transition-fast);
 }
 
 .surprise-dialog-action:hover {
-  background: var(--purple-dark);
+  background: var(--color-brand-strong);
 }
 
 .surprise-sr-only {
