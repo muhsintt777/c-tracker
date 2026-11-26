@@ -1,4 +1,3 @@
-import './Dashboard.css';
 import {
   AlertCircle,
   CalendarDays,
@@ -34,6 +33,7 @@ import {
   updatePeriod,
 } from '../../services/periodRepository';
 import { SurpriseFab } from '../surprise/SurpriseFab';
+import styles from './Dashboard.module.css';
 
 const today = () => format(new Date(), 'yyyy-MM-dd');
 const displayDate = (value: string, pattern = 'MMMM d, yyyy') =>
@@ -235,16 +235,16 @@ export function Dashboard() {
         : 0;
 
   return (
-    <main className="page-shell">
-      <section className="tracker-app" aria-label="Cycle tracker">
-        <header className="top-bar">
+    <main className={styles.pageShell}>
+      <section className={styles.trackerApp} aria-label="Cycle tracker">
+        <header className={styles.topBar}>
           <div>
             <h1>Cycle</h1>
             <p>Your cycle overview</p>
           </div>
-          <div className="profile-wrap" ref={profileRef}>
+          <div className={styles.profileWrap} ref={profileRef}>
             <button
-              className="icon-button profile-trigger"
+              className={`${styles.iconButton} ${styles.profileTrigger}`}
               type="button"
               aria-label="Open profile menu"
               aria-expanded={profileOpen}
@@ -253,34 +253,34 @@ export function Dashboard() {
               <CircleUserRound size={20} />
             </button>
             {profileOpen && (
-              <div className="profile-menu">
-                <span className="profile-email">
+              <div className={styles.profileMenu}>
+                <span className={styles.profileEmail}>
                   {user?.email ?? 'Signed in'}
                 </span>
-                <div className="profile-version">
+                <div className={styles.profileVersion}>
                   <span>App version</span>
-                  <span className="profile-version-value">
+                  <span className={styles.profileVersionValue}>
                     <strong>{packageInfo.version}</strong>
                     {isDevelopmentBuild && (
-                      <span className="build-label">Development</span>
+                      <span className={styles.buildLabel}>Development</span>
                     )}
                   </span>
                 </div>
                 <button
-                  className="theme-toggle"
+                  className={styles.themeToggle}
                   type="button"
                   role="switch"
                   aria-checked={theme === 'dark'}
                   onClick={toggleTheme}
                 >
-                  <span className="theme-toggle-label">
+                  <span className={styles.themeToggleLabel}>
                     <Moon size={16} />
                     Dark theme
                   </span>
-                  <span className="theme-switch" aria-hidden="true" />
+                  <span className={styles.themeSwitch} aria-hidden="true" />
                 </button>
                 <button
-                  className="profile-signout"
+                  className={styles.profileSignout}
                   type="button"
                   onClick={() => void signOut()}
                 >
@@ -292,13 +292,13 @@ export function Dashboard() {
         </header>
 
         {authError && (
-          <div className="inline-alert" role="alert">
+          <div className={styles.inlineAlert} role="alert">
             <AlertCircle size={17} />
             {authError}
           </div>
         )}
         {dataError && (
-          <div className="inline-alert" role="alert">
+          <div className={styles.inlineAlert} role="alert">
             <AlertCircle size={17} />
             <span>Couldn’t load your periods: {dataError}</span>
             <button type="button" onClick={() => window.location.reload()}>
@@ -307,12 +307,15 @@ export function Dashboard() {
           </div>
         )}
 
-        <section className="countdown-card" aria-labelledby="countdown-heading">
-          <p className="section-overline" id="countdown-heading">
+        <section
+          className={styles.countdownCard}
+          aria-labelledby="countdown-heading"
+        >
+          <p className={styles.sectionOverline} id="countdown-heading">
             NEXT EXPECTED PERIOD
           </p>
           <div
-            className="countdown-ring"
+            className={styles.countdownRing}
             style={{ '--ring-progress': ringProgress } as React.CSSProperties}
             aria-label={
               prediction
@@ -321,25 +324,27 @@ export function Dashboard() {
             }
           >
             <svg viewBox="0 0 160 160" aria-hidden="true">
-              <circle className="ring-track" cx="80" cy="80" r="69" />
-              <circle className="ring-value" cx="80" cy="80" r="69" />
+              <circle className={styles.ringTrack} cx="80" cy="80" r="69" />
+              <circle className={styles.ringValue} cx="80" cy="80" r="69" />
             </svg>
-            <div className="ring-copy">
+            <div className={styles.ringCopy}>
               {ongoingPeriod ? (
                 <>
-                  <span className="ring-kicker">Current status</span>
-                  <strong className="ring-ongoing">Ongoing</strong>
-                  <span className="ring-small">
+                  <span className={styles.ringKicker}>Current status</span>
+                  <strong className={styles.ringOngoing}>Ongoing</strong>
+                  <span className={styles.ringSmall}>
                     since {displayDate(ongoingPeriod.startDate, 'MMM d')}
                   </span>
                 </>
               ) : prediction ? (
                 <>
-                  <span className="ring-kicker">{countdownLabel}</span>
+                  <span className={styles.ringKicker}>{countdownLabel}</span>
                   {countdownValue !== null && (
-                    <strong className="ring-number">{countdownValue}</strong>
+                    <strong className={styles.ringNumber}>
+                      {countdownValue}
+                    </strong>
                   )}
-                  <span className="ring-small">
+                  <span className={styles.ringSmall}>
                     {countdownValue !== null
                       ? countdownValue === 1
                         ? 'day'
@@ -350,17 +355,17 @@ export function Dashboard() {
               ) : (
                 <>
                   <CalendarDays size={21} />
-                  <span className="ring-small">No estimate yet</span>
+                  <span className={styles.ringSmall}>No estimate yet</span>
                 </>
               )}
             </div>
           </div>
           {prediction ? (
             <>
-              <h2 className="estimated-date">
+              <h2 className={styles.estimatedDate}>
                 {displayDate(prediction.estimatedDate)}
               </h2>
-              <p className="estimate-caption">
+              <p className={styles.estimateCaption}>
                 {ongoingPeriod
                   ? 'Estimated from your recorded cycle starts'
                   : prediction.isPreliminary
@@ -370,10 +375,10 @@ export function Dashboard() {
             </>
           ) : (
             <>
-              <h2 className="estimated-date empty-date">
+              <h2 className={`${styles.estimatedDate} ${styles.emptyDate}`}>
                 Your first estimate will appear here
               </h2>
-              <p className="estimate-caption">
+              <p className={styles.estimateCaption}>
                 Record a period to get started. Estimates are not medically
                 validated.
               </p>
@@ -381,25 +386,28 @@ export function Dashboard() {
           )}
         </section>
 
-        <section className="history-section" aria-labelledby="history-heading">
-          <div className="section-heading">
+        <section
+          className={styles.historySection}
+          aria-labelledby="history-heading"
+        >
+          <div className={styles.sectionHeading}>
             <h2 id="history-heading">Period history</h2>
             <span>
               {periods.length} {periods.length === 1 ? 'record' : 'records'}
             </span>
           </div>
           {loadingPeriods ? (
-            <div className="history-empty" role="status">
+            <div className={styles.historyEmpty} role="status">
               Loading period history…
             </div>
           ) : orderedPeriods.length === 0 ? (
-            <div className="history-empty">
+            <div className={styles.historyEmpty}>
               <CalendarDays size={23} />
               <strong>No periods recorded yet</strong>
               <span>Add your last period to begin tracking.</span>
             </div>
           ) : (
-            <ul className="history-list">
+            <ul className={styles.historyList}>
               {orderedPeriods.map((period) => {
                 const isOngoing = period.endDate === null;
                 const duration =
@@ -409,33 +417,36 @@ export function Dashboard() {
                 return (
                   <li key={period.id}>
                     <button
-                      className="history-row"
+                      className={styles.historyRow}
                       type="button"
                       onClick={() => openDialog({ kind: 'edit', period })}
                       aria-label={`Edit period starting ${displayDate(period.startDate)}`}
                     >
-                      <span className="history-icon">
+                      <span className={styles.historyIcon}>
                         <CalendarDays size={17} />
                       </span>
-                      <span className="history-copy">
-                        <span className="history-title">
+                      <span className={styles.historyCopy}>
+                        <span className={styles.historyTitle}>
                           {isOngoing
                             ? 'Ongoing period'
                             : displayDate(period.startDate, 'MMMM d')}{' '}
                         </span>
-                        <span className="history-subtitle">
+                        <span className={styles.historySubtitle}>
                           {isOngoing
                             ? `${displayDate(period.startDate, 'MMM d')} – In progress`
                             : `${displayDate(period.startDate, 'MMM d')} – ${displayDate(period.endDate!, 'MMM d')} · ${duration} ${duration === 1 ? 'day' : 'days'}`}
                         </span>
                       </span>
                       {isOngoing ? (
-                        <span className="ongoing-pill">
+                        <span className={styles.ongoingPill}>
                           <span />
                           Ongoing
                         </span>
                       ) : (
-                        <ChevronRight className="history-chevron" size={18} />
+                        <ChevronRight
+                          className={styles.historyChevron}
+                          size={18}
+                        />
                       )}
                     </button>
                   </li>
@@ -446,7 +457,7 @@ export function Dashboard() {
         </section>
 
         {analysis.issues.length > 0 && (
-          <p className="data-warning" role="status">
+          <p className={styles.dataWarning} role="status">
             <AlertCircle size={15} /> Some dates need review before they can be
             used in estimates.
           </p>
@@ -454,7 +465,7 @@ export function Dashboard() {
 
         <SurpriseFab />
         <button
-          className="fab"
+          className={styles.fab}
           type="button"
           onClick={() =>
             openDialog(
@@ -466,7 +477,7 @@ export function Dashboard() {
           aria-label={ongoingPeriod ? 'End period' : 'Track period'}
         >
           <Plus size={24} />
-          <span className="sr-only">
+          <span className={styles.srOnly}>
             {ongoingPeriod ? 'End period' : 'Track period'}
           </span>
         </button>
@@ -474,18 +485,18 @@ export function Dashboard() {
 
       {dialog && (
         <div
-          className="dialog-backdrop"
+          className={styles.dialogBackdrop}
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) closeDialog();
           }}
         >
           <section
-            className="period-dialog"
+            className={styles.periodDialog}
             role="dialog"
             aria-modal="true"
             aria-labelledby="dialog-title"
           >
-            <div className="dialog-heading">
+            <div className={styles.dialogHeading}>
               <h2 id="dialog-title">
                 {dialog.kind === 'start'
                   ? 'Track a period'
@@ -496,7 +507,7 @@ export function Dashboard() {
                       : 'Edit period'}
               </h2>
               <button
-                className="icon-button close-button"
+                className={`${styles.iconButton} ${styles.closeButton}`}
                 type="button"
                 onClick={closeDialog}
                 aria-label="Close dialog"
@@ -507,7 +518,7 @@ export function Dashboard() {
             </div>
             {dialog.kind === 'delete' ? (
               <>
-                <p className="dialog-description">
+                <p className={styles.dialogDescription}>
                   This will permanently remove the period starting{' '}
                   {displayDate(dialog.period.startDate)}. This can’t be undone.
                 </p>
@@ -516,9 +527,9 @@ export function Dashboard() {
                     {formError}
                   </p>
                 )}
-                <div className="dialog-actions">
+                <div className={styles.dialogActions}>
                   <button
-                    className="secondary-button"
+                    className={styles.secondaryButton}
                     type="button"
                     onClick={closeDialog}
                     disabled={saving}
@@ -526,7 +537,7 @@ export function Dashboard() {
                     Cancel
                   </button>
                   <button
-                    className="danger-button"
+                    className={styles.dangerButton}
                     type="button"
                     onClick={() => void deleteSelected(dialog.period)}
                     disabled={saving}
@@ -537,7 +548,7 @@ export function Dashboard() {
               </>
             ) : (
               <form onSubmit={submitDialog}>
-                <p className="dialog-description">
+                <p className={styles.dialogDescription}>
                   {dialog.kind === 'start'
                     ? 'Choose the day your period started.'
                     : dialog.kind === 'end'
@@ -589,10 +600,10 @@ export function Dashboard() {
                     {formError}
                   </p>
                 )}
-                <div className="dialog-actions">
+                <div className={styles.dialogActions}>
                   {dialog.kind === 'edit' && (
                     <button
-                      className="text-danger-button"
+                      className={styles.textDangerButton}
                       type="button"
                       onClick={() =>
                         openDialog({ kind: 'delete', period: dialog.period })
@@ -602,9 +613,9 @@ export function Dashboard() {
                       Delete record
                     </button>
                   )}
-                  <span className="actions-spacer" />
+                  <span className={styles.actionsSpacer} />
                   <button
-                    className="secondary-button"
+                    className={styles.secondaryButton}
                     type="button"
                     onClick={closeDialog}
                     disabled={saving}

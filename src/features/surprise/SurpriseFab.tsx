@@ -1,6 +1,6 @@
-import './SurpriseFab.css';
 import { CircleHelp, Sparkles, Trophy, X } from 'lucide-react';
 import { useState, type CSSProperties } from 'react';
+import styles from './SurpriseFab.module.css';
 
 const confettiPieces = Array.from({ length: 48 }, (_, index) => ({
   left: `${(index * 41) % 100}%`,
@@ -16,23 +16,25 @@ export function SurpriseFab() {
   return (
     <>
       <button
-        className="surprise-fab"
+        className={styles.surpriseFab}
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Open cycle tracking information"
       >
         <CircleHelp size={22} />
-        <span className="surprise-sr-only">Cycle tracking information</span>
+        <span className={styles.surpriseSrOnly}>
+          Cycle tracking information
+        </span>
       </button>
 
       {open && (
         <div
-          className="surprise-dialog-backdrop"
+          className={styles.surpriseDialogBackdrop}
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) setOpen(false);
           }}
         >
-          <div className="surprise-confetti" aria-hidden="true">
+          <div className={styles.surpriseConfetti} aria-hidden="true">
             {confettiPieces.map((piece, index) => (
               <span
                 key={index}
@@ -49,18 +51,18 @@ export function SurpriseFab() {
             ))}
           </div>
           <section
-            className="surprise-dialog"
+            className={styles.surpriseDialog}
             role="dialog"
             aria-modal="true"
             aria-labelledby="surprise-dialog-title"
           >
-            <div className="surprise-celebration-badge" aria-hidden="true">
-              <Sparkles className="surprise-sparkle" size={22} />
+            <div className={styles.surpriseCelebrationBadge} aria-hidden="true">
+              <Sparkles className={styles.surpriseSparkle} size={22} />
               <Trophy size={34} strokeWidth={1.8} />
-              <Sparkles className="surprise-sparkle" size={22} />
+              <Sparkles className={styles.surpriseSparkle} size={22} />
             </div>
             <button
-              className="surprise-dialog-close"
+              className={styles.surpriseDialogClose}
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close dialog"
@@ -68,14 +70,14 @@ export function SurpriseFab() {
               <X size={19} />
             </button>
             <p
-              className="surprise-dialog-description"
+              className={styles.surpriseDialogDescription}
               id="surprise-dialog-title"
             >
               Congratulations to my gorgeous gaaal for 9.33 CGPA...🥳
             </p>
-            <div className="surprise-dialog-actions">
+            <div className={styles.surpriseDialogActions}>
               <button
-                className="surprise-dialog-action"
+                className={styles.surpriseDialogAction}
                 type="button"
                 onClick={() => setOpen(false)}
               >

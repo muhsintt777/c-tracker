@@ -1,4 +1,4 @@
-.surprise-fab {
+.surpriseFab {
   position: absolute;
   right: 12px;
   bottom: 96px;
@@ -17,12 +17,12 @@
   transition: background var(--transition-fast);
 }
 
-.surprise-fab:hover {
+.surpriseFab:hover {
   background: var(--color-brand-soft);
   animation-play-state: paused;
 }
 
-.surprise-fab:active {
+.surpriseFab:active {
   transform: translateY(0) scale(0.96);
 }
 
@@ -36,7 +36,7 @@
   }
 }
 
-.surprise-dialog-backdrop {
+.surpriseDialogBackdrop {
   position: fixed;
   inset: 0;
   z-index: 10;
@@ -48,7 +48,7 @@
   animation: surprise-backdrop-in 0.24s ease-out both;
 }
 
-.surprise-confetti {
+.surpriseConfetti {
   position: absolute;
   inset: 0;
   z-index: 1;
@@ -56,7 +56,7 @@
   pointer-events: none;
 }
 
-.surprise-confetti span {
+.surpriseConfetti span {
   --confetti-drift: 20px;
   --confetti-rotation: 360deg;
   position: absolute;
@@ -72,22 +72,22 @@
   animation-fill-mode: both;
 }
 
-.surprise-confetti span:nth-child(4n + 2) {
+.surpriseConfetti span:nth-child(4n + 2) {
   width: 11px;
   height: 11px;
   border-radius: var(--radius-round);
   background: var(--color-accent-pink-soft);
 }
 
-.surprise-confetti span:nth-child(4n + 3) {
+.surpriseConfetti span:nth-child(4n + 3) {
   background: var(--color-accent-green);
 }
 
-.surprise-confetti span:nth-child(4n + 4) {
+.surpriseConfetti span:nth-child(4n + 4) {
   background: var(--color-brand);
 }
 
-.surprise-dialog {
+.surpriseDialog {
   position: relative;
   z-index: 2;
   width: min(100%, 410px);
@@ -106,7 +106,7 @@
   animation: surprise-dialog-pop 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.surprise-celebration-badge {
+.surpriseCelebrationBadge {
   display: flex;
   width: 108px;
   height: 66px;
@@ -118,22 +118,22 @@
     both;
 }
 
-.surprise-celebration-badge > svg:nth-child(2) {
+.surpriseCelebrationBadge > svg:nth-child(2) {
   animation: surprise-trophy-celebrate 1.6s ease-in-out 0.8s infinite;
   transform-origin: center bottom;
 }
 
-.surprise-sparkle {
+.surpriseSparkle {
   color: var(--color-accent-pink);
   animation: surprise-sparkle 1.25s ease-in-out 0.45s infinite;
 }
 
-.surprise-sparkle:last-child {
+.surpriseSparkle:last-child {
   color: var(--color-accent-green);
   animation-delay: 0.75s;
 }
 
-.surprise-dialog-close {
+.surpriseDialogClose {
   position: absolute;
   top: 12px;
   right: 12px;
@@ -149,11 +149,11 @@
   cursor: pointer;
 }
 
-.surprise-dialog-close:hover {
+.surpriseDialogClose:hover {
   background: var(--color-brand-soft);
 }
 
-.surprise-dialog-description {
+.surpriseDialogDescription {
   margin: 8px auto 0;
   max-width: 330px;
   color: var(--color-text-strong);
@@ -163,14 +163,14 @@
   animation: surprise-copy-in 0.5s ease-out 0.4s both;
 }
 
-.surprise-dialog-actions {
+.surpriseDialogActions {
   display: flex;
   justify-content: center;
   margin-top: 22px;
   animation: surprise-copy-in 0.5s ease-out 0.5s both;
 }
 
-.surprise-dialog-action {
+.surpriseDialogAction {
   display: inline-flex;
   min-height: 40px;
   align-items: center;
@@ -186,11 +186,11 @@
   transition: background var(--transition-fast);
 }
 
-.surprise-dialog-action:hover {
+.surpriseDialogAction:hover {
   background: var(--color-brand-strong);
 }
 
-.surprise-sr-only {
+.surpriseSrOnly {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -202,7 +202,7 @@
 }
 
 @media (max-width: 480px) {
-  .surprise-fab {
+  .surpriseFab {
     bottom: calc(96px + env(safe-area-inset-bottom));
   }
 }
@@ -304,19 +304,19 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .surprise-fab,
-  .surprise-dialog-backdrop,
-  .surprise-dialog,
-  .surprise-celebration-badge,
-  .surprise-celebration-badge > svg:nth-child(2),
-  .surprise-sparkle,
-  .surprise-dialog-description,
-  .surprise-dialog-actions,
-  .surprise-confetti span {
+  .surpriseFab,
+  .surpriseDialogBackdrop,
+  .surpriseDialog,
+  .surpriseCelebrationBadge,
+  .surpriseCelebrationBadge > svg:nth-child(2),
+  .surpriseSparkle,
+  .surpriseDialogDescription,
+  .surpriseDialogActions,
+  .surpriseConfetti span {
     animation: none;
   }
 
-  .surprise-confetti {
+  .surpriseConfetti {
     display: none;
   }
 }
