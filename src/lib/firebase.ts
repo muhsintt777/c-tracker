@@ -13,3 +13,5 @@ export const firebaseReady = Object.values(firebaseConfig).every(Boolean);
 export const firebaseApp = firebaseReady ? initializeApp(firebaseConfig) : null;
 export const auth = firebaseApp ? getAuth(firebaseApp) : null;
 export const db = firebaseApp ? getFirestore(firebaseApp) : null;
+
+// todo: reduce firebase bundle size.
