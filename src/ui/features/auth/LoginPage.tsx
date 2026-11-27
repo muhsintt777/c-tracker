@@ -1,10 +1,9 @@
 import { Activity, ShieldCheck } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
-import { useAuth } from '@/app/AuthContext';
-import { firebaseReady } from '@/lib/firebase';
+import { useAuth } from '@/ui/providers/AuthContext';
 
 export function LoginPage() {
-  const { signIn, loading, error, clearError } = useAuth();
+  const { signIn, loading, ready, error, clearError } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -25,7 +24,7 @@ export function LoginPage() {
         <p className="login-description">
           Keep track of your period and get a gentle estimate of what’s ahead.
         </p>
-        {!firebaseReady && (
+        {!ready && (
           <div className="notice-box" role="status">
             Firebase isn’t configured yet. Copy <code>.env.example</code> to{' '}
             <code>.env.local</code> and add your Firebase web app settings.

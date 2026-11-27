@@ -1,14 +1,17 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { AuthProvider, useAuth } from './AuthContext';
+import { authService } from '@/infra/firebase/authService';
+import { periodRepository } from '@/infra/firebase/periodRepository';
+import { AppServicesProvider } from './providers/AppServicesContext';
+import { AuthProvider, useAuth } from './providers/AuthContext';
 
 const Dashboard = lazy(() =>
-  import('@/features/dashboard/Dashboard').then((module) => ({
+  import('@/ui/features/dashboard/Dashboard').then((module) => ({
     default: module.Dashboard,
   })),
 );
 const LoginPage = lazy(() =>
-  import('@/features/auth/LoginPage').then((module) => ({
+  import('@/ui/features/auth/LoginPage').then((module) => ({
     default: module.LoginPage,
   })),
 );
@@ -63,10 +66,12 @@ function AppRoutes() {
 
 export function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+    <AuthProvider service={authService}>
+      <AppServicesProvider periodRepository={periodRepository}>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </AppServicesProvider>
     </AuthProvider>
   );
 }

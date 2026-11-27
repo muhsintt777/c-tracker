@@ -4,7 +4,7 @@ Cycle is a mobile-first period tracker built with React, TypeScript, Firebase Au
 
 ## Engineering Highlights
 
-- **Explicit domain boundaries:** cycle calculations are isolated from React and Firebase, while feature screens own user interactions and services own persistence.
+- **Explicit domain boundaries:** domain rules are independent of React and Firebase, application use cases orchestrate behavior, and infrastructure adapters own persistence.
 - **Calendar-safe date modeling:** period dates stay as local-calendar `YYYY-MM-DD` strings. Calendar-day arithmetic avoids converting user-entered dates through UTC timestamps.
 - **Defensive data handling:** inputs are validated before writes, Firestore documents are checked when read, and Firestore Security Rules independently enforce ownership and record shape.
 - **Transparent estimation:** invalid, duplicate, overlapping, and implausible records are surfaced for review instead of silently contributing to a prediction.
@@ -14,29 +14,30 @@ Cycle is a mobile-first period tracker built with React, TypeScript, Firebase Au
 
 ```mermaid
 flowchart LR
-  User[User] --> Routes[React Router]
-  Routes --> Auth[AuthProvider]
-  Auth --> FirebaseAuth[Firebase Authentication]
-  Routes --> Features[Login and Dashboard features]
-  Features --> Domain[Pure cycle domain]
-  Features --> Repository[Period repository]
-  Repository --> Firestore[Cloud Firestore]
-  Rules[Firestore Security Rules] --> Firestore
+  User[User] --> UI[UI layer]
+  UI --> App[Application layer]
+  App --> Domain[Domain layer]
+  Infra[Infrastructure layer] -->|implements ports in| App
+  Infra --> Firebase[Firebase services]
+  Composition[Composition root] --> Infra
+  Composition --> UI
+  Rules[Firestore Security Rules] --> Firebase
 ```
 
 ### Responsibilities
 
-- `src/domain/cycle/` defines period types, calendar-date validation, interval filtering, and cycle predictions. It has no UI or Firebase dependency.
-- `src/features/` contains the login and dashboard flows, including form validation, overlap checks, loading/error states, period history, and prediction presentation.
-- `src/app/` owns authentication state and route protection. Dashboard and login screens are lazy-loaded, with loading fallbacks while routes resolve.
-- `src/services/periodRepository.ts` is the Firestore boundary for period subscriptions and writes. It validates local records and checks remote document fields before returning typed data to the UI.
+- `src/domain/` contains entities, types, and business rules. It has no React or Firebase dependency.
+- `src/app/` contains use cases and repository/authentication ports. It depends on the domain and does not know which UI or database implements those ports.
+- `src/infra/` contains Firebase initialization and the concrete adapters for application ports. The period adapter validates remote data at the persistence boundary.
+- `src/ui/` contains React routes, providers, stores, styles, and features. It adapts user interaction to application use cases and hides infrastructure behind injected ports.
+- `src/main.tsx` is the composition root that injects concrete infrastructure adapters into the UI.
 - `firestore.rules` applies user-scoped access and validates allowed fields, calendar dates, and server timestamps independently of client-side checks.
 
 ### Cycle calculation and data integrity
 
 Dates are stored as `YYYY-MM-DD` strings and compared as calendar dates. Period duration is inclusive of both endpoints. Cycle intervals are measured between consecutive starts; intervals outside 15–45 days, duplicate starts, invalid dates, and overlapping periods are excluded and reported for review. Predictions use the mean of up to the six most recent plausible intervals, rounded to a whole day. If no plausible interval is available, the app uses a clearly labeled preliminary 28-day estimate.
 
-The dashboard validates dates and checks for overlapping records before writes. The repository validates values again, Firestore Security Rules enforce each user's document boundary and schema, and server timestamps are used for audit fields. These layers protect different trust boundaries; client-side validation is not treated as a substitute for database rules.
+Period use cases validate dates and reject overlapping records before writes. The Firebase repository validates values again at the persistence boundary, Firestore Security Rules enforce each user's document boundary and schema, and server timestamps are used for audit fields. These layers protect different trust boundaries; client-side validation is not treated as a substitute for database rules.
 
 ## Technology
 

@@ -52,6 +52,22 @@ export function validatePeriod(period: Period): string | null {
   return null;
 }
 
+export function periodsOverlap(left: Period, right: Period): boolean {
+  const leftEnd = left.endDate ?? '9999-12-31';
+  const rightEnd = right.endDate ?? '9999-12-31';
+  return left.startDate <= rightEnd && right.startDate <= leftEnd;
+}
+
+export function overlapsAnotherPeriod(
+  candidate: Period,
+  periods: Period[],
+  excludedId?: string,
+): boolean {
+  return periods.some(
+    (period) => period.id !== excludedId && periodsOverlap(candidate, period),
+  );
+}
+
 export function getCycleIntervals(periods: Period[]): {
   intervals: CycleInterval[];
   issues: string[];

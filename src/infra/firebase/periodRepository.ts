@@ -10,9 +10,10 @@ import {
   updateDoc,
   type Unsubscribe,
 } from 'firebase/firestore';
+import type { PeriodRepository } from '@/app/ports/PeriodRepository';
 import { validatePeriod } from '@/domain/cycle/calculations';
 import type { Period } from '@/domain/cycle/types';
-import { db } from '@/lib/firebase';
+import { db } from './firebase';
 
 function userPeriods(uid: string) {
   if (!db) throw new Error('Firebase is not configured.');
@@ -93,3 +94,10 @@ export async function removePeriod(
   if (!db) throw new Error('Firebase is not configured.');
   await deleteDoc(doc(db, 'users', uid, 'periods', periodId));
 }
+
+export const periodRepository: PeriodRepository = {
+  subscribe: subscribeToPeriods,
+  create: createPeriod,
+  update: updatePeriod,
+  remove: removePeriod,
+};

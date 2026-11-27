@@ -8,31 +8,21 @@ import {
   Plus,
   X,
 } from 'lucide-react';
-import packageInfo from '../../../package.json';
+import packageInfo from '../../../../package.json';
 import { format, parseISO } from 'date-fns';
+import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type FormEvent,
-} from 'react';
-import { useAuth } from '@/app/AuthContext';
-import { useTheme } from '@/app/themeStore';
-import {
-  analyzeCycle,
-  isCalendarDate,
-  periodDuration,
-} from '@/domain/cycle/calculations';
-import type { Period } from '@/domain/cycle/types';
-import {
-  createPeriod,
-  removePeriod,
+  deletePeriod,
+  savePeriod as persistPeriod,
+  startPeriod,
   subscribeToPeriods,
-  updatePeriod,
-} from '@/services/periodRepository';
-import { SurpriseFab } from '@/features/surprise/SurpriseFab';
+} from '@/app/cycle/periodUseCases';
+import { analyzeCycle, periodDuration } from '@/domain/cycle/calculations';
+import type { Period } from '@/domain/cycle/types';
+import { SurpriseFab } from '@/ui/features/surprise/SurpriseFab';
+import { usePeriodRepository } from '@/ui/providers/AppServicesContext';
+import { useAuth } from '@/ui/providers/AuthContext';
+import { useTheme } from '@/ui/stores/themeStore';
 import styles from './Dashboard.module.css';
 
 // todo: create date utils
@@ -50,6 +40,7 @@ type DialogState =
 
 export function Dashboard() {
   const { user, signOut, error: authError } = useAuth();
+  const periodRepository = usePeriodRepository();
   const { theme, toggleTheme } = useTheme();
   const [periods, setPeriods] = useState<Period[]>([]);
   const [dataError, setDataError] = useState<string | null>(null);
@@ -81,6 +72,7 @@ export function Dashboard() {
     if (!userId) return;
     setLoadingPeriods(true);
     return subscribeToPeriods(
+      periodRepository,
       userId,
       (nextPeriods) => {
         setPeriods(nextPeriods);
@@ -92,7 +84,7 @@ export function Dashboard() {
         setLoadingPeriods(false);
       },
     );
-  }, [userId]);
+  }, [periodRepository, userId]);
 
   const orderedPeriods = useMemo(
     () => [...periods].sort((a, b) => b.startDate.localeCompare(a.startDate)),
@@ -114,39 +106,15 @@ export function Dashboard() {
     }
   };
 
-  const hasOverlap = useCallback(
-    (candidate: Period, excludedId?: string) => {
-      return periods.some((period) => {
-        if (period.id === excludedId) return false;
-        const candidateEnd = candidate.endDate ?? '9999-12-31';
-        const existingEnd = period.endDate ?? '9999-12-31';
-        return (
-          candidate.startDate <= existingEnd && period.startDate <= candidateEnd
-        );
-      });
-    },
-    [periods],
-  );
-
   async function saveStart(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!userId) return;
     const form = new FormData(event.currentTarget);
     const startDate = String(form.get('startDate') ?? '');
     setFormError(null);
-    if (!isCalendarDate(startDate)) {
-      setFormError('Choose a valid start date.');
-      return;
-    }
-    if (hasOverlap({ id: 'new', startDate, endDate: null })) {
-      setFormError(
-        'This date overlaps another recorded period. Update its dates first.',
-      );
-      return;
-    }
     setSaving(true);
     try {
-      await createPeriod(userId, startDate);
+      await startPeriod(periodRepository, userId, periods, startDate);
       setDialog(null);
     } catch (error) {
       setFormError(
@@ -165,21 +133,9 @@ export function Dashboard() {
     const endValue = String(form.get('endDate') ?? '');
     const updated: Period = { ...period, startDate, endDate: endValue || null };
     setFormError(null);
-    if (!isCalendarDate(startDate) || (endValue && !isCalendarDate(endValue))) {
-      setFormError('Choose valid calendar dates.');
-      return;
-    }
-    if (endValue && endValue < startDate) {
-      setFormError('End date cannot be before the start date.');
-      return;
-    }
-    if (hasOverlap(updated, period.id)) {
-      setFormError('These dates overlap another recorded period.');
-      return;
-    }
     setSaving(true);
     try {
-      await updatePeriod(userId, updated);
+      await persistPeriod(periodRepository, userId, periods, updated);
       setDialog(null);
     } catch (error) {
       setFormError(
@@ -197,7 +153,7 @@ export function Dashboard() {
     setSaving(true);
     setFormError(null);
     try {
-      await removePeriod(userId, period.id);
+      await deletePeriod(periodRepository, userId, period.id);
       setDialog(null);
     } catch (error) {
       setFormError(
