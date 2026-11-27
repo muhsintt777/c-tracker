@@ -3,3 +3,4 @@ allowBuilds:
   esbuild: true
   protobufjs: false
   re2: true
+engineStrict: true
