@@ -29,7 +29,7 @@ flowchart LR
 - `src/domain/` contains entities, types, and business rules. It has no React or Firebase dependency.
 - `src/app/` contains use cases and repository/authentication ports. It depends on the domain and does not know which UI or database implements those ports.
 - `src/infra/` contains Firebase initialization and the concrete adapters for application ports. The period adapter validates remote data at the persistence boundary.
-- `src/ui/` contains React routes, providers, stores, styles, and features. It adapts user interaction to application use cases and hides infrastructure behind injected ports.
+- `src/ui/` contains React routes, Zustand stores, styles, and features. Stores hold global state and infrastructure bindings without React context providers.
 - `src/main.tsx` is the composition root that injects concrete infrastructure adapters into the UI.
 - `firestore.rules` applies user-scoped access and validates allowed fields, calendar dates, and server timestamps independently of client-side checks.
 

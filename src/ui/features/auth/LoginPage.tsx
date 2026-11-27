@@ -1,6 +1,6 @@
 import { Activity, ShieldCheck } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
-import { useAuth } from '@/ui/providers/AuthContext';
+import { useAuth } from '@/ui/stores/authStore';
 
 export function LoginPage() {
   const { signIn, loading, ready, error, clearError } = useAuth();

@@ -20,8 +20,8 @@ import {
 import { analyzeCycle, periodDuration } from '@/domain/cycle/calculations';
 import type { Period } from '@/domain/cycle/types';
 import { SurpriseFab } from '@/ui/features/surprise/SurpriseFab';
-import { usePeriodRepository } from '@/ui/providers/AppServicesContext';
-import { useAuth } from '@/ui/providers/AuthContext';
+import { useAuth } from '@/ui/stores/authStore';
+import { usePeriodRepository } from '@/ui/stores/servicesStore';
 import { useTheme } from '@/ui/stores/themeStore';
 import styles from './Dashboard.module.css';
 

@@ -2,8 +2,11 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { authService } from '@/infra/firebase/authService';
 import { periodRepository } from '@/infra/firebase/periodRepository';
-import { AppServicesProvider } from './providers/AppServicesContext';
-import { AuthProvider, useAuth } from './providers/AuthContext';
+import { initializeAuth, useAuth } from './stores/authStore';
+import { initializeServices } from './stores/servicesStore';
+
+initializeAuth(authService);
+initializeServices(periodRepository);
 
 const Dashboard = lazy(() =>
   import('@/ui/features/dashboard/Dashboard').then((module) => ({
@@ -24,6 +27,7 @@ function RouteLoading() {
   );
 }
 
+// todo: split router
 function AppRoutes() {
   const { user, loading } = useAuth();
   if (loading)
@@ -66,12 +70,8 @@ function AppRoutes() {
 
 export function App() {
   return (
-    <AuthProvider service={authService}>
-      <AppServicesProvider periodRepository={periodRepository}>
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
-      </AppServicesProvider>
-    </AuthProvider>
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
   );
 }
