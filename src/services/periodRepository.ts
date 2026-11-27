@@ -10,9 +10,9 @@ import {
   updateDoc,
   type Unsubscribe,
 } from 'firebase/firestore';
-import { validatePeriod } from '../domain/cycle/calculations';
-import type { Period } from '../domain/cycle/types';
-import { db } from '../lib/firebase';
+import { validatePeriod } from '@/domain/cycle/calculations';
+import type { Period } from '@/domain/cycle/types';
+import { db } from '@/lib/firebase';
 
 function userPeriods(uid: string) {
   if (!db) throw new Error('Firebase is not configured.');

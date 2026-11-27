@@ -1,7 +1,7 @@
 import { Activity, ShieldCheck } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
-import { useAuth } from '../../app/AuthContext';
-import { firebaseReady } from '../../lib/firebase';
+import { useAuth } from '@/app/AuthContext';
+import { firebaseReady } from '@/lib/firebase';
 
 export function LoginPage() {
   const { signIn, loading, error, clearError } = useAuth();

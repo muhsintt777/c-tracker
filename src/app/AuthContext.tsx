@@ -19,7 +19,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { auth, db, firebaseReady } from '../lib/firebase';
+import { auth, db, firebaseReady } from '@/lib/firebase';
 
 interface AuthContextValue {
   user: User | null;

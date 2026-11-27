@@ -3,12 +3,12 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { AuthProvider, useAuth } from './AuthContext';
 
 const Dashboard = lazy(() =>
-  import('../features/dashboard/Dashboard').then((module) => ({
+  import('@/features/dashboard/Dashboard').then((module) => ({
     default: module.Dashboard,
   })),
 );
 const LoginPage = lazy(() =>
-  import('../features/auth/LoginPage').then((module) => ({
+  import('@/features/auth/LoginPage').then((module) => ({
     default: module.LoginPage,
   })),
 );

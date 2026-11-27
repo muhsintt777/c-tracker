@@ -18,29 +18,28 @@ import {
   useState,
   type FormEvent,
 } from 'react';
-import { useAuth } from '../../app/AuthContext';
-import { useTheme } from '../../app/themeStore';
+import { useAuth } from '@/app/AuthContext';
+import { useTheme } from '@/app/themeStore';
 import {
   analyzeCycle,
   isCalendarDate,
   periodDuration,
-} from '../../domain/cycle/calculations';
-import type { Period } from '../../domain/cycle/types';
+} from '@/domain/cycle/calculations';
+import type { Period } from '@/domain/cycle/types';
 import {
   createPeriod,
   removePeriod,
   subscribeToPeriods,
   updatePeriod,
-} from '../../services/periodRepository';
-import { SurpriseFab } from '../surprise/SurpriseFab';
+} from '@/services/periodRepository';
+import { SurpriseFab } from '@/features/surprise/SurpriseFab';
 import styles from './Dashboard.module.css';
 
+// todo: create date utils
 const today = () => format(new Date(), 'yyyy-MM-dd');
 const displayDate = (value: string, pattern = 'MMMM d, yyyy') =>
   format(parseISO(value), pattern);
 const isDevelopmentBuild = import.meta.env.MODE === 'dev';
-
-// todo: configure absolute imports
 
 type DialogState =
   | { kind: 'start' }
